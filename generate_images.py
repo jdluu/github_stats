@@ -71,7 +71,7 @@ async def generate_languages(s: Stats) -> None:
             f'width: {data.get("prop", 0):0.3f}%;" '
             f'class="progress-item"></span>'
         )
-        lang_list += f"""
+        lang_list_items = f"""
 <li style="animation-delay: {i * delay_between}ms;">
 <svg xmlns="http://www.w3.org/2000/svg" class="octicon" style="fill:{color};"
 viewBox="0 0 16 16" version="1.1" width="16" height="16"><path
@@ -81,9 +81,10 @@ fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
 </li>
 
 """
+        lang_list += lang_list_items
 
     output = re.sub(r"{{ progress }}", progress, output)
-    output = re.sub(r"{{ lang_list }}", lang_list, output)
+    output = re.sub(r"{{ lang_list }}", "".join(lang_list), output)
 
     generate_output_folder()
     with open("generated/languages.svg", "w") as f:
